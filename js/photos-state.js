@@ -1,4 +1,4 @@
-import { getUniqueRandomNumbers } from './utils';
+import { getRandomInteger } from './utils';
 
 let loadedPhotos = {};
 const RANDOM_COUNT = 10;
@@ -20,32 +20,21 @@ export function getDefaultPhotos() {
 
 
 export function getRandomPhotos(countPhotos = RANDOM_COUNT) {
-  const randomIds = getUniqueRandomNumbers(0, loadedPhotos.length - 1, countPhotos)();
   const randomPhotos = [];
+  const copyPhotos = loadedPhotos.slice();
 
-  for (let i = 0; i < randomIds.length; i++) {
-    randomPhotos.push(loadedPhotos[randomIds[i]]);
+  for (let i = 0; i < countPhotos; i += 1) {
+    randomPhotos.push(copyPhotos.splice(getRandomInteger(0, copyPhotos.length - 1), 1)[0]);
   }
 
   return randomPhotos;
 }
 
 
+const sortByComments = (a, b) => b.comments.length - a.comments.length;
+
 export function getDiscussedPhotos() {
   const sortedPhotos = loadedPhotos.slice().sort(sortByComments);
 
   return sortedPhotos;
-}
-
-
-function sortByComments(a, b) {
-  {
-    if (a.comments.length > b.comments.length) {
-      return -1;
-    }
-    if (a.comments.length < b.comments.length) {
-      return 1;
-    }
-    return 0;
-  }
 }

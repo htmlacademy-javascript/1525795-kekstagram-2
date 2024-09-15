@@ -1,10 +1,13 @@
 const ALERT_SHOW_TIME = 5000;
-const errorTemplate = document.querySelector('#data-error').content;
+const loadErrorTemplate = document.querySelector('#data-error').content;
+const sendErrorTemplate = document.querySelector('#error').content;
 const successTemplate = document.querySelector('#success').content;
 
-export const showErrMessage = () => {
+
+// Используется только при загрузке миниатюр
+export const showLoadErrMessage = () => {
   const errDiv = document.createElement('div');
-  errDiv.appendChild(errorTemplate);
+  errDiv.appendChild(loadErrorTemplate.cloneNode(true));
   document.body.appendChild(errDiv);
 
   setTimeout(() => {
@@ -13,33 +16,46 @@ export const showErrMessage = () => {
 };
 
 
-export const showSuccessMessage = () => {
-  document.body.appendChild(successTemplate.cloneNode(true));
-
-  document.addEventListener('keydown', closeSuccessAlertByEsc);
-  document.addEventListener('click', closeSuccessAlertByClick);
-
-  document.querySelector('.success__title').textContent = 'Изображение успешно отправлено!';
+// Используется при отправке изображения
+export const showSendErrMessage = () => {
+  showMessage(sendErrorTemplate, '.error');
 };
 
 
-function closeSuccessAlertByEsc(evt) {
+// Используется при отправке изображения
+export const showSuccessMessage = () => {
+  showMessage(successTemplate, '.success');
+};
+
+
+function showMessage(messageTemplate, messageClass) {
+  document.body.appendChild(messageTemplate.cloneNode(true));
+  const message = document.querySelector(messageClass);
+  message.classList.add('alert');
+
+  document.addEventListener('keydown', messageEscHandler);
+  document.addEventListener('click', messageClickHandler);
+}
+
+
+function messageEscHandler(evt) {
   if (evt.key === 'Escape') {
     evt.preventDefault();
-    closeSuccessAlert();
+    closeAlert();
   }
 }
 
 
-function closeSuccessAlertByClick(evt) {
-  if (evt.target === document.querySelector('.success') || evt.target === document.querySelector('.success__button')) {
+function messageClickHandler(evt) {
+  if (['success', 'success__button', 'error', 'error__button'].some((item) => evt.target.classList.contains(item))) {
     evt.preventDefault();
-    closeSuccessAlert();
+    closeAlert();
   }
 }
 
-function closeSuccessAlert() {
-  document.removeEventListener('keydown', closeSuccessAlertByEsc);
-  document.removeEventListener('click', closeSuccessAlertByClick);
-  document.querySelector('.success').remove();
+
+function closeAlert() {
+  document.removeEventListener('keydown', messageEscHandler);
+  document.removeEventListener('click', messageClickHandler);
+  document.querySelector('.alert').remove();
 }

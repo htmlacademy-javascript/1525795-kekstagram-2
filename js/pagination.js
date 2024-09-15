@@ -1,29 +1,26 @@
-export function getArrayPages(arr, pageSize = 5) {
+let pages;
+
+
+export function splitCommentsByPage(arr, pageSize = 5) {
+  pages = [];
   const arrCopy = arr.slice();
-  const result = {};
-  let pageNum = 0; // Используем человекочитаемые номера страниц
 
-  // Нарезаем страницы массива
+  // Нарезаем массив на страницы
   while (arrCopy.length) {
-    pageNum += 1;
-    result[pageNum] = arrCopy.splice(0, pageSize);
+    pages.push(arrCopy.splice(0, pageSize));
   }
-  // И записываем количество страниц
-  result['length'] = pageNum;
-
-  return result;
 }
 
 
-export function getPageCount(pages) {
-  return pages['length'];
+export function getPageCount() {
+  return pages.length;
 }
 
 
-export function getPageItems(pages, pageNum) {
+export function getPageItems(pageNum) {
   return pages[pageNum];
 }
 
-export function getPageLength(pages, pageNum) {
+export function getPageLength(pageNum) {
   return pages[pageNum] === undefined ? 0 : pages[pageNum].length;
 }

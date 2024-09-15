@@ -1,24 +1,30 @@
-const sizeValue = document.querySelector('.scale__control--value');
+const inputScaleSize = document.querySelector('.scale__control--value');
 const imgPreview = document.querySelector('.img-upload__preview img');
-let currentSize = 100;
-const sizeStep = 25;
-const minSize = 25;
-const maxSize = 100;
+let CURRENT_SIZE = 100;
+const STEP_SIZE = 25;
+const MIN_SIZE = 25;
+const MAX_SIZE = 100;
 
 
 export const previewScaleDown = () => {
-  currentSize = currentSize > minSize ? currentSize -= sizeStep : currentSize;
+  CURRENT_SIZE = CURRENT_SIZE > MIN_SIZE ? CURRENT_SIZE -= STEP_SIZE : CURRENT_SIZE;
   changePreview();
 };
 
 
 export const previewScaleUp = () => {
-  currentSize = currentSize < maxSize ? currentSize += sizeStep : currentSize;
+  CURRENT_SIZE = CURRENT_SIZE < MAX_SIZE ? CURRENT_SIZE += STEP_SIZE : CURRENT_SIZE;
+  changePreview();
+};
+
+
+export const resetSizePreview = () => {
+  CURRENT_SIZE = 100;
   changePreview();
 };
 
 
 function changePreview() {
-  sizeValue.value = `${currentSize}%`;
-  imgPreview.style.transform = `scale(${currentSize / 100})`;
+  inputScaleSize.value = `${CURRENT_SIZE}%`;
+  imgPreview.style.transform = `scale(${CURRENT_SIZE / 100})`;
 }

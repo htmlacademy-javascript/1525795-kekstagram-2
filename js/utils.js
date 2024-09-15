@@ -35,36 +35,6 @@ export function getRandomInteger(min, max) {
 }
 
 
-export function getUniqueRandomNumbers(min, max, numbersCount = 1) {
-  const values = [];
-
-  return function () {
-    for (let i = 0; i < numbersCount; i++) {
-      let newValue = getRandomInteger(min, max);
-      if (values.length >= (max - min + 1)) {
-        // Обработать ошибку в вызывающем коде
-        return null;
-      }
-      while (values.includes(newValue)) {
-        newValue = getRandomInteger(min, max);
-      }
-      values.push(newValue);
-    }
-
-    return values;
-  };
-}
-
-
-export function getUniqueRandomListElements(list, elementsCount = 1) {
-  const listElements = [];
-  const randomNumbers = getUniqueRandomNumbers(0, list.length - 1, elementsCount)();
-  randomNumbers.forEach((item) => listElements.push(list[item]));
-
-  return listElements;
-}
-
-
 export function debounce (callback, timeoutDelay = 500) {
   // Используем замыкания, чтобы id таймаута у нас навсегда приклеился
   // к возвращаемой функции с setTimeout, тогда мы его сможем перезаписывать

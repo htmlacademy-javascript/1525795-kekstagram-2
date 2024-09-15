@@ -1,10 +1,10 @@
 import { isDuplicates } from './utils';
 
-const uploadForm = document.querySelector('.img-upload__form');
-const inputTags = uploadForm.querySelector('.text__hashtags');
-const inputComment = uploadForm.querySelector('.text__description');
-const pristine = new Pristine(uploadForm, {}, false);
-const validateError = document.createElement('p');
+const formUpload = document.querySelector('.img-upload__form');
+const inputTags = formUpload.querySelector('.text__hashtags');
+const inputComment = formUpload.querySelector('.text__description');
+const pristine = new Pristine(formUpload, {}, false);
+const divError = document.createElement('div');
 
 pristine.addValidator(inputTags, validateHashtags);
 
@@ -14,10 +14,12 @@ export function validateHashtags() {
     return true;
   }
 
-  inputTags.classList.remove('img-upload__field-wrapper--error');
-  validateError.textContent = '';
+  clearError(inputTags);
 
-  const tags = inputTags.value.split(' ');
+  let tags = inputTags.value.toUpperCase().split(' ');
+  // Принудительно удаляем пустые теги (replaceAll работает некорректно при нескольких подряд идущих пробелах)
+  tags = tags.filter((item) => item.trim().length > 0);
+
   const hashtag = /^#[a-zа-яё0-9]{1,19}$/i;
   let isError = false;
   let errText = '';
@@ -38,25 +40,36 @@ export function validateHashtags() {
   }
 
   if (isError) {
-    validateError.textContent = errText;
-    inputTags.parentNode.insertAdjacentElement('beforeend', validateError);
-    inputTags.classList.add('img-upload__field-wrapper--error');
+    displayError(inputTags, errText);
 
     return false;
   }
-
+  divError.remove();
   return true;
 }
 
 export function validateComment() {
-  inputComment.classList.remove('img-upload__field-wrapper--error');
-  validateError.textContent = '';
+  clearError(inputComment);
   if (inputComment.value.length > 140) {
-    validateError.textContent = 'Длина комментария не может быть больше 140 символов!';
-    inputComment.parentNode.insertAdjacentElement('beforeend', validateError);
-    inputComment.classList.add('img-upload__field-wrapper--error');
+    const errText = 'Длина комментария не может быть больше 140 символов!';
+    displayError(inputComment, errText);
 
     return false;
   }
   return true;
+}
+
+
+function displayError(fieldName, errText) {
+  fieldName.parentNode.insertAdjacentElement('beforeend', divError);
+  divError.textContent = errText;
+  divError.classList.add('pristine-error');
+  divError.classList.add('img-upload__field-wrapper--error');
+}
+
+
+function clearError(fieldName) {
+  fieldName.classList.remove('pristine-error');
+  fieldName.classList.remove('img-upload__field-wrapper--error');
+  divError.textContent = '';
 }

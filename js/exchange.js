@@ -1,13 +1,13 @@
-import { showErrMessage, showSuccessMessage } from './alerts';
+import { showLoadErrMessage, showSendErrMessage, showSuccessMessage } from './alerts';
 import { saveLoadedPhotos } from './photos-state';
 import { showThumbnail } from './show-thumbnail';
 
 const GET_ENDPOINT = 'https://31.javascript.htmlacademy.pro/kekstagram/data';
 const POST_ENDPOINT = 'https://31.javascript.htmlacademy.pro/kekstagram';
-const submitButton = document.querySelector('#upload-submit');
+const submitButton = document.querySelector('.img-upload__submit');
 
 
-const getData = (cb) => {
+export const getData = (cb) => {
   fetch(GET_ENDPOINT)
     .then((response) => {
       if (!response.ok) {
@@ -18,12 +18,12 @@ const getData = (cb) => {
     .then((data) => {
       saveLoadedPhotos(data);
     })
-    .then(() => cb())
+    .then(() => cb()) // Фильтрация фотографий
     .then((photos) => {
       showThumbnail(photos);
     })
     .catch((err) => {
-      showErrMessage(err.message); // Ошибка соединения с сервером!
+      showLoadErrMessage(err.message); // Ошибка соединения с сервером!
     });
 };
 
@@ -33,7 +33,7 @@ function enableSubmit () {
 }
 
 
-const sendData = (formData, cb) =>
+export const sendData = (formData, cb) =>
   fetch(POST_ENDPOINT, { method: 'POST', body: formData })
     .then((response) => {
       if (!response.ok) {
@@ -47,9 +47,6 @@ const sendData = (formData, cb) =>
       cb();
     })
     .catch((err) => {
-      showErrMessage(err.message); // Ошибка соединения с сервером
+      showSendErrMessage(err.message); // Ошибка соединения с сервером
     })
     .finally(enableSubmit);
-
-
-export { getData, sendData };
