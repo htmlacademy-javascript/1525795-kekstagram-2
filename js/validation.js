@@ -45,6 +45,7 @@ export function validateHashtags() {
     return false;
   }
   divError.remove();
+
   return true;
 }
 
@@ -56,6 +57,8 @@ export function validateComment() {
 
     return false;
   }
+  divError.remove();
+
   return true;
 }
 

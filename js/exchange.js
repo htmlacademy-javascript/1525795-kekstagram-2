@@ -2,13 +2,17 @@ import { showLoadErrMessage, showSendErrMessage, showSuccessMessage } from './al
 import { saveLoadedPhotos } from './photos-state';
 import { showThumbnail } from './show-thumbnail';
 
-const GET_ENDPOINT = 'https://31.javascript.htmlacademy.pro/kekstagram/data';
-const POST_ENDPOINT = 'https://31.javascript.htmlacademy.pro/kekstagram';
+const GET_ENDPOINT = 'https://31.javascript.htmlacademy.pro/kekstagram/data/';
+const POST_ENDPOINT = 'https://31.javascript.htmlacademy.pro/kekstagram/';
 const submitButton = document.querySelector('.img-upload__submit');
+const Method = {
+  GET: 'GET',
+  POST: 'POST'
+};
 
 
 export const getData = (cb) => {
-  fetch(GET_ENDPOINT)
+  fetch(GET_ENDPOINT, {method: Method.GET})
     .then((response) => {
       if (!response.ok) {
         throw new Error('Некорректный ответ сервера!');
@@ -34,7 +38,7 @@ function enableSubmit () {
 
 
 export const sendData = (formData, cb) =>
-  fetch(POST_ENDPOINT, { method: 'POST', body: formData })
+  fetch(POST_ENDPOINT, { method: Method.POST, body: formData })
     .then((response) => {
       if (!response.ok) {
         throw new Error(); // Некорректный ответ сервера
