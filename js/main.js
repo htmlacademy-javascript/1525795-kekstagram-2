@@ -2,10 +2,11 @@ import { getData } from './exchange';
 import { getDefaultPhotos, getRandomPhotos, getDiscussedPhotos } from './photos-state';
 import { debounce } from './utils';
 
+const RENDERER_DELAY = 500;
+
 const buttonFilterDefault = document.querySelector('#filter-default');
 const buttonFilterRandom = document.querySelector('#filter-random');
 const buttonFilterDiscussed = document.querySelector('#filter-discussed');
-const RENDERER_DELAY = 500;
 
 const debounceWrapper = debounce(getData, RENDERER_DELAY);
 

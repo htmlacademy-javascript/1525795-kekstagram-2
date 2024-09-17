@@ -1,5 +1,8 @@
 import { isDuplicates } from './utils';
 
+const MAX_TAGS = 5;
+const MAX_COMMENT_LENGTH = 140;
+
 const formUpload = document.querySelector('.img-upload__form');
 const inputTags = formUpload.querySelector('.text__hashtags');
 const inputComment = formUpload.querySelector('.text__description');
@@ -24,8 +27,8 @@ export function validateHashtags() {
   let isError = false;
   let errText = '';
 
-  if (tags.length > 5) {
-    errText += 'Не более 5 хэштегов!';
+  if (tags.length > MAX_TAGS) {
+    errText += `Не более ${MAX_TAGS} хэштегов!`;
     isError = true;
   }
 
@@ -51,8 +54,8 @@ export function validateHashtags() {
 
 export function validateComment() {
   clearError(inputComment);
-  if (inputComment.value.length > 140) {
-    const errText = 'Длина комментария не может быть больше 140 символов!';
+  if (inputComment.value.length > MAX_COMMENT_LENGTH) {
+    const errText = `Длина комментария не может быть больше ${MAX_COMMENT_LENGTH} символов!`;
     displayError(inputComment, errText);
 
     return false;

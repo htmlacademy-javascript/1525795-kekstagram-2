@@ -1,7 +1,8 @@
 import { getRandomInteger } from './utils';
 
-let loadedPhotos = {};
 const RANDOM_COUNT = 10;
+
+let loadedPhotos = {};
 
 
 export function saveLoadedPhotos(photos) {

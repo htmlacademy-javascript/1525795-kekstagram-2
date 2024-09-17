@@ -1,6 +1,8 @@
 import { documentEscHandler } from './upload-photo';
+import { thumbnailClickHandler } from './view-photo';
 
 const ALERT_SHOW_TIME = 5000;
+
 const loadErrorTemplate = document.querySelector('#data-error').content;
 const sendErrorTemplate = document.querySelector('#error').content;
 const successTemplate = document.querySelector('#success').content;
@@ -62,4 +64,5 @@ function closeAlert() {
   document.removeEventListener('keydown', messageEscHandler);
   document.removeEventListener('click', messageClickHandler);
   document.querySelector('.alert').remove();
+  document.querySelector('.pictures').addEventListener('click', thumbnailClickHandler);
 }

@@ -5,6 +5,7 @@ import { getPageLength } from './pagination.js';
 import { getLoadedPhotos } from './photos-state.js';
 
 const COMMENTS_BY_PAGE = 5;
+
 const sectionPhotoView = document.querySelector('.big-picture');
 const buttonClose = sectionPhotoView.querySelector('.big-picture__cancel');
 const imgPhotoView = document.querySelector('.big-picture__img img');

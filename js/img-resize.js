@@ -1,9 +1,10 @@
-const inputScaleSize = document.querySelector('.scale__control--value');
-const imgPreview = document.querySelector('.img-upload__preview img');
 let CURRENT_SIZE = 100;
 const STEP_SIZE = 25;
 const MIN_SIZE = 25;
 const MAX_SIZE = 100;
+
+const inputScaleSize = document.querySelector('.scale__control--value');
+const imgPreview = document.querySelector('.img-upload__preview img');
 
 
 export const previewScaleDown = () => {
@@ -25,6 +26,6 @@ export const resetSizePreview = () => {
 
 
 function changePreview() {
-  inputScaleSize.value = `${CURRENT_SIZE}%`;
+  inputScaleSize.setAttribute('value', `${CURRENT_SIZE}%`);
   imgPreview.style.transform = `scale(${CURRENT_SIZE / 100})`;
 }
