@@ -46,7 +46,6 @@ function messageEscHandler(evt) {
   if (evt.key === 'Escape') {
     evt.preventDefault();
     closeAlert();
-    document.addEventListener('keydown', documentEscHandler);
 
   }
 }
@@ -65,4 +64,5 @@ function closeAlert() {
   document.removeEventListener('click', messageClickHandler);
   document.querySelector('.alert').remove();
   document.querySelector('.pictures').addEventListener('click', thumbnailClickHandler);
+  document.addEventListener('keydown', documentEscHandler);
 }

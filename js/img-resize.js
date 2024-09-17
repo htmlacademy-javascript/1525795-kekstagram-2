@@ -1,31 +1,32 @@
-let CURRENT_SIZE = 100;
 const STEP_SIZE = 25;
 const MIN_SIZE = 25;
 const MAX_SIZE = 100;
+
+let currentSize = MAX_SIZE;
 
 const inputScaleSize = document.querySelector('.scale__control--value');
 const imgPreview = document.querySelector('.img-upload__preview img');
 
 
 export const previewScaleDown = () => {
-  CURRENT_SIZE = CURRENT_SIZE > MIN_SIZE ? CURRENT_SIZE -= STEP_SIZE : CURRENT_SIZE;
+  currentSize = currentSize > MIN_SIZE ? currentSize -= STEP_SIZE : currentSize;
   changePreview();
 };
 
 
 export const previewScaleUp = () => {
-  CURRENT_SIZE = CURRENT_SIZE < MAX_SIZE ? CURRENT_SIZE += STEP_SIZE : CURRENT_SIZE;
+  currentSize = currentSize < MAX_SIZE ? currentSize += STEP_SIZE : currentSize;
   changePreview();
 };
 
 
 export const resetSizePreview = () => {
-  CURRENT_SIZE = 100;
+  currentSize = 100;
   changePreview();
 };
 
 
 function changePreview() {
-  inputScaleSize.setAttribute('value', `${CURRENT_SIZE}%`);
-  imgPreview.style.transform = `scale(${CURRENT_SIZE / 100})`;
+  inputScaleSize.setAttribute('value', `${currentSize}%`);
+  imgPreview.style.transform = `scale(${currentSize / 100})`;
 }

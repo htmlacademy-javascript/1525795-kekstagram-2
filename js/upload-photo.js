@@ -68,6 +68,7 @@ function closeUploadForm () {
   inputFile.value = '';
   resetSizePreview();
   resetEffectPreview();
+  document.querySelector('.pictures').addEventListener('click', thumbnailClickHandler);
 }
 
 
