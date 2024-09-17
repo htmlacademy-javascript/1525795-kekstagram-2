@@ -30,7 +30,7 @@ document.querySelector('.pictures').addEventListener('click', thumbnailClickHand
 buttonCommentsLoader.addEventListener('click', commentsLoadClickHandler);
 
 
-function thumbnailClickHandler(evt) {
+export function thumbnailClickHandler(evt) {
   // Проверяем, что click был на миниатюре
   if (evt.target.nodeName === 'IMG' && evt.target.classList.contains('picture__img')) {
     sectionPhotoView.classList.remove('hidden');
@@ -59,6 +59,17 @@ function thumbnailClickHandler(evt) {
 
 function commentsLoadClickHandler() {
   loadComments();
+}
+
+
+function initComments() {
+  // Обнуляем комментарии
+  currentPageNum = 0;
+  shownCommentsCount = 0;
+  ulComments.innerHTML = '';
+
+  // Разбиваем комментарии на страницы по COMMENTS_BY_PAGE штук, чтобы потом постранично их подгружать
+  splitCommentsByPage(comments, COMMENTS_BY_PAGE);
 }
 
 
@@ -103,17 +114,6 @@ function showCommentsPageInfo() {
   }
   shownCommentsCount += getPageLength(currentPageNum);
   spanShownCount.textContent = shownCommentsCount;
-}
-
-
-function initComments() {
-  // Обнуляем комментарии
-  currentPageNum = 0;
-  shownCommentsCount = 0;
-  ulComments.innerHTML = '';
-
-  // Разбиваем комментарии на страницы по COMMENTS_BY_PAGE штук, чтобы потом постранично их подгружать
-  splitCommentsByPage(comments, COMMENTS_BY_PAGE);
 }
 
 

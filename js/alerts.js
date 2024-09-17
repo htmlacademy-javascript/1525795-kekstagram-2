@@ -1,3 +1,5 @@
+import { documentEscHandler } from './upload-photo';
+
 const ALERT_SHOW_TIME = 5000;
 const loadErrorTemplate = document.querySelector('#data-error').content;
 const sendErrorTemplate = document.querySelector('#error').content;
@@ -30,8 +32,8 @@ export const showSuccessMessage = () => {
 
 function showMessage(messageTemplate, messageClass) {
   document.body.appendChild(messageTemplate.cloneNode(true));
-  const message = document.querySelector(messageClass);
-  message.classList.add('alert');
+  const sectionMessage = document.querySelector(messageClass);
+  sectionMessage.classList.add('alert');
 
   document.addEventListener('keydown', messageEscHandler);
   document.addEventListener('click', messageClickHandler);
@@ -42,6 +44,8 @@ function messageEscHandler(evt) {
   if (evt.key === 'Escape') {
     evt.preventDefault();
     closeAlert();
+    document.addEventListener('keydown', documentEscHandler);
+
   }
 }
 

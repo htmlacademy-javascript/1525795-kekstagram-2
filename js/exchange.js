@@ -1,6 +1,7 @@
 import { showLoadErrMessage, showSendErrMessage, showSuccessMessage } from './alerts';
 import { saveLoadedPhotos } from './photos-state';
 import { showThumbnail } from './show-thumbnail';
+import { documentEscHandler } from './upload-photo';
 
 const GET_ENDPOINT = 'https://31.javascript.htmlacademy.pro/kekstagram/data/';
 const POST_ENDPOINT = 'https://31.javascript.htmlacademy.pro/kekstagram/';
@@ -51,6 +52,9 @@ export const sendData = (formData, cb) =>
       cb();
     })
     .catch((err) => {
+      document.removeEventListener('keydown', documentEscHandler);
       showSendErrMessage(err.message); // Ошибка соединения с сервером
     })
-    .finally(enableSubmit);
+    .finally(() => {
+      enableSubmit();
+    });

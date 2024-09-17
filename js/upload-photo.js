@@ -3,6 +3,7 @@ import { previewScaleDown, previewScaleUp } from './img-resize';
 import { resetEffectPreview } from './img-effects';
 import { validateHashtags, validateComment } from './validation';
 import { resetSizePreview } from './img-resize';
+import { thumbnailClickHandler } from './view-photo';
 
 const formUpload = document.querySelector('.img-upload__form');
 const inputFile = document.querySelector('.img-upload__input');
@@ -21,12 +22,16 @@ inputFile.addEventListener('change', inputFileChangeHandler);
 
 
 function inputFileChangeHandler(evt) {
-  formUpload.addEventListener('keydown', uploadEscHandler);
+  // Здесь Esc нужно навешивать целиком на весь документ, в противном случае при открытии формы и при клике на картинку
+  // не срабатывает событие keyDown-Esc
+  document.addEventListener('keydown', documentEscHandler);
   buttonCancel.addEventListener('click', uploadClickHandler);
   formUpload.addEventListener('submit', uploadSubmitHandler);
 
   btnSmaller.addEventListener('click', previewScaleDown);
   btnBigger.addEventListener('click', previewScaleUp);
+  document.querySelector('.pictures').removeEventListener('click', thumbnailClickHandler);
+
 
   resetEffectPreview();
   resetSizePreview();
@@ -44,6 +49,7 @@ function inputFileChangeHandler(evt) {
 
 function uploadClickHandler() {
   closeUploadForm();
+  document.querySelector('.pictures').addEventListener('click', thumbnailClickHandler);
 }
 
 
@@ -53,7 +59,7 @@ function closeUploadForm () {
   btnBigger.removeEventListener('click', previewScaleUp);
 
   // Удаляем слушатели на закрытие модального окна
-  document.removeEventListener('keydown', uploadEscHandler);
+  document.removeEventListener('keydown', documentEscHandler);
   buttonCancel.removeEventListener('click', uploadClickHandler);
   formUpload.removeEventListener('submit', uploadSubmitHandler);
 
@@ -65,7 +71,7 @@ function closeUploadForm () {
 }
 
 
-function uploadEscHandler(evt) {
+export function documentEscHandler(evt) {
   if (evt.key === 'Escape') {
     // Если Esc не на поле хэштега или примечания, закрыть форму
     if (!(evt.target === inputTags || evt.target === inputComment)) {
