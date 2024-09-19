@@ -9,10 +9,23 @@ const inputComment = formUpload.querySelector('.text__description');
 const pristine = new Pristine(formUpload, {}, false);
 const divError = document.createElement('div');
 
-pristine.addValidator(inputTags, validateHashtags);
+
+const displayError = (fieldName, errText) => {
+  fieldName.parentNode.insertAdjacentElement('beforeend', divError);
+  divError.textContent = errText;
+  divError.classList.add('pristine-error');
+  divError.classList.add('img-upload__field-wrapper--error');
+};
 
 
-export function validateHashtags() {
+const clearError = (fieldName) => {
+  fieldName.classList.remove('pristine-error');
+  fieldName.classList.remove('img-upload__field-wrapper--error');
+  divError.textContent = '';
+};
+
+
+export const validateHashtags = () => {
   if (!inputTags.value) {
     return true;
   }
@@ -50,9 +63,10 @@ export function validateHashtags() {
   divError.remove();
 
   return true;
-}
+};
 
-export function validateComment() {
+
+export const validateComment = () => {
   clearError(inputComment);
   if (inputComment.value.length > MAX_COMMENT_LENGTH) {
     const errText = `Длина комментария не может быть больше ${MAX_COMMENT_LENGTH} символов!`;
@@ -63,19 +77,6 @@ export function validateComment() {
   divError.remove();
 
   return true;
-}
+};
 
-
-function displayError(fieldName, errText) {
-  fieldName.parentNode.insertAdjacentElement('beforeend', divError);
-  divError.textContent = errText;
-  divError.classList.add('pristine-error');
-  divError.classList.add('img-upload__field-wrapper--error');
-}
-
-
-function clearError(fieldName) {
-  fieldName.classList.remove('pristine-error');
-  fieldName.classList.remove('img-upload__field-wrapper--error');
-  divError.textContent = '';
-}
+pristine.addValidator(inputTags, validateHashtags);

@@ -33,12 +33,12 @@ export const getData = (cb) => {
 };
 
 
-function enableSubmit () {
+const enableSubmit = () => {
   submitButton.disabled = false;
-}
+};
 
 
-export const sendData = (formData, cb) =>
+export const sendData = (formData, cb) => {
   fetch(POST_ENDPOINT, { method: Method.POST, body: formData })
     .then((response) => {
       if (!response.ok) {
@@ -58,3 +58,4 @@ export const sendData = (formData, cb) =>
     .finally(() => {
       enableSubmit();
     });
+};

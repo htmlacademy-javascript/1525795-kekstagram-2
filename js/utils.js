@@ -1,30 +1,28 @@
-function countItems(arr, item) {
+const countItems = (itemsArray, item) => {
   let count = 0;
 
-  for (let i = 0; i < arr.length; i++) {
-    if (arr[i] === item) {
+  for (let i = 0; i < itemsArray.length; i++) {
+    if (itemsArray[i] === item) {
       count += 1;
     }
   }
   return count;
-}
+};
 
 
-export function isDuplicates(arr) {
-  return !(arr.every((item) => countItems(arr, item) === 1));
-}
+export const isDuplicates = (itemsArray) => !(itemsArray.every((item) => countItems(itemsArray, item) === 1));
 
 
-export function getRandomInteger(min, max) {
+export const getRandomInteger = (min, max) => {
   const lower = Math.ceil(Math.min(Math.abs(min), Math.abs(max)));
   const upper = Math.floor(Math.max(Math.abs(min), Math.abs(max)));
   const result = Math.random() * (upper - lower + 1) + lower;
 
   return Math.floor(result);
-}
+};
 
 
-export function debounce (callback, timeoutDelay = 500) {
+export const debounce = (callback, timeoutDelay = 500) => {
   // Используем замыкания, чтобы id таймаута у нас навсегда приклеился
   // к возвращаемой функции с setTimeout, тогда мы его сможем перезаписывать
   let timeoutId;
@@ -40,10 +38,10 @@ export function debounce (callback, timeoutDelay = 500) {
     // Таким образом цикл «поставить таймаут - удалить таймаут» будет выполняться,
     // пока действие совершается чаще, чем переданная задержка timeoutDelay
   };
-}
+};
 
 
-export function throttle (callback, delayBetweenFrames) {
+export const throttle = (callback, delayBetweenFrames) => {
   // Используем замыкания, чтобы время "последнего кадра" навсегда приклеилось
   // к возвращаемой функции с условием, тогда мы его сможем перезаписывать
   let lastTime = 0;
@@ -62,4 +60,4 @@ export function throttle (callback, delayBetweenFrames) {
       lastTime = now;
     }
   };
-}
+};

@@ -9,7 +9,7 @@ const successTemplate = document.querySelector('#success').content;
 
 
 // Используется только при загрузке миниатюр
-export const showLoadErrMessage = () => {
+export function showLoadErrMessage() {
   const errDiv = document.createElement('div');
   errDiv.appendChild(loadErrorTemplate.cloneNode(true));
   document.body.appendChild(errDiv);
@@ -17,28 +17,15 @@ export const showLoadErrMessage = () => {
   setTimeout(() => {
     errDiv.remove();
   }, ALERT_SHOW_TIME);
-};
+}
 
 
-// Используется при отправке изображения
-export const showSendErrMessage = () => {
-  showMessage(sendErrorTemplate, '.error');
-};
-
-
-// Используется при отправке изображения
-export const showSuccessMessage = () => {
-  showMessage(successTemplate, '.success');
-};
-
-
-function showMessage(messageTemplate, messageClass) {
-  document.body.appendChild(messageTemplate.cloneNode(true));
-  const sectionMessage = document.querySelector(messageClass);
-  sectionMessage.classList.add('alert');
-
-  document.addEventListener('keydown', messageEscHandler);
-  document.addEventListener('click', messageClickHandler);
+function closeAlert() {
+  document.removeEventListener('keydown', messageEscHandler);
+  document.removeEventListener('click', messageClickHandler);
+  document.querySelector('.alert').remove();
+  document.querySelector('.pictures').addEventListener('click', thumbnailClickHandler);
+  document.addEventListener('keydown', documentEscHandler);
 }
 
 
@@ -46,7 +33,6 @@ function messageEscHandler(evt) {
   if (evt.key === 'Escape') {
     evt.preventDefault();
     closeAlert();
-
   }
 }
 
@@ -59,10 +45,23 @@ function messageClickHandler(evt) {
 }
 
 
-function closeAlert() {
-  document.removeEventListener('keydown', messageEscHandler);
-  document.removeEventListener('click', messageClickHandler);
-  document.querySelector('.alert').remove();
-  document.querySelector('.pictures').addEventListener('click', thumbnailClickHandler);
-  document.addEventListener('keydown', documentEscHandler);
+function showMessage(messageTemplate, messageClass) {
+  document.body.appendChild(messageTemplate.cloneNode(true));
+  const sectionMessage = document.querySelector(messageClass);
+  sectionMessage.classList.add('alert');
+
+  document.addEventListener('keydown', messageEscHandler);
+  document.addEventListener('click', messageClickHandler);
+}
+
+
+// Используется при отправке изображения
+export function showSendErrMessage() {
+  showMessage(sendErrorTemplate, '.error');
+}
+
+
+// Используется при отправке изображения
+export function showSuccessMessage() {
+  showMessage(successTemplate, '.success');
 }

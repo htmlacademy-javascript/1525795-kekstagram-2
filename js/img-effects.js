@@ -51,30 +51,7 @@ defaultSliderOptions['format'] = {
   },
 };
 
-radioEffects.addEventListener('click', filterClickHandler);
-
-
-function initSlider() {
-  noUiSlider.create(sliderEffect, defaultSliderOptions);
-
-  sliderEffect.noUiSlider.on('update', () => {
-    inputEffectLevel.value = sliderEffect.noUiSlider.get();
-    imgPreview.style.filter = `${FilterSettings[currentFilter]['FUNCTION']}(${inputEffectLevel.value}${FilterSettings[currentFilter]['UNIT']})`;
-  });
-}
-
-
-export function resetEffectPreview() {
-  currentFilter = 'none';
-  imgPreview.style = '';
-  imgEffectLevel.hidden = true;
-  radioDefaultEffect.checked = true;
-
-  sliderEffect.noUiSlider.updateOptions(FilterSettings[currentFilter]['OPTIONS']);
-}
-
-
-function filterClickHandler(evt) {
+const filterClickHandler = (evt) => {
   if (evt.target.nodeName === 'INPUT') {
     currentFilter = evt.target.value;
 
@@ -89,8 +66,30 @@ function filterClickHandler(evt) {
       inputEffectLevel.value = sliderEffect.value;
     }
   }
-}
+};
 
+
+const initSlider = () => {
+  noUiSlider.create(sliderEffect, defaultSliderOptions);
+
+  sliderEffect.noUiSlider.on('update', () => {
+    inputEffectLevel.value = sliderEffect.noUiSlider.get();
+    imgPreview.style.filter = `${FilterSettings[currentFilter]['FUNCTION']}(${inputEffectLevel.value}${FilterSettings[currentFilter]['UNIT']})`;
+  });
+};
+
+
+export const resetEffectPreview = () => {
+  currentFilter = 'none';
+  imgPreview.style = '';
+  imgEffectLevel.hidden = true;
+  radioDefaultEffect.checked = true;
+
+  sliderEffect.noUiSlider.updateOptions(FilterSettings[currentFilter]['OPTIONS']);
+};
+
+
+radioEffects.addEventListener('click', filterClickHandler);
 imgEffectLevel.hidden = true;
 initSlider();
 resetEffectPreview();

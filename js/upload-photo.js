@@ -17,11 +17,15 @@ const buttonSubmit = document.querySelector('.img-upload__submit');
 const btnSmaller = document.querySelector('.scale__control--smaller');
 const btnBigger = document.querySelector('.scale__control--bigger');
 
+const sectionPictures = document.querySelector('.pictures');
 
 inputFile.addEventListener('change', inputFileChangeHandler);
 
 
 function inputFileChangeHandler(evt) {
+  // Отключаем слушатели с главной страницы
+  sectionPictures.removeEventListener('click', thumbnailClickHandler);
+
   // Здесь Esc нужно навешивать целиком на весь документ, в противном случае при открытии формы и при клике на картинку
   // не срабатывает событие keyDown-Esc
   document.addEventListener('keydown', documentEscHandler);
@@ -49,7 +53,6 @@ function inputFileChangeHandler(evt) {
 
 function uploadClickHandler() {
   closeUploadForm();
-  document.querySelector('.pictures').addEventListener('click', thumbnailClickHandler);
 }
 
 
@@ -68,6 +71,8 @@ function closeUploadForm () {
   inputFile.value = '';
   resetSizePreview();
   resetEffectPreview();
+
+  // Восстанавливаем слушатели с главной страницы
   document.querySelector('.pictures').addEventListener('click', thumbnailClickHandler);
 }
 

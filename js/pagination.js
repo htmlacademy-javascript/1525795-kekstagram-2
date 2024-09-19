@@ -1,27 +1,22 @@
+const DEFAULT_PAGE_SIZE = 5;
 let pages;
 
 
-export function splitCommentsByPage(arr, pageSize = 5) {
+export const splitCommentsByPage = (comments, pageSize = DEFAULT_PAGE_SIZE) => {
   pages = [];
-  const arrCopy = arr.slice();
+  const arrCopy = comments.slice();
 
   // Нарезаем массив на страницы
   while (arrCopy.length) {
     pages.push(arrCopy.splice(0, pageSize));
   }
-}
+};
 
 
-export function getPageCount() {
-  return pages.length;
-}
+export const getPageCount = () => pages.length;
 
 
-export function getPageItems(pageNum) {
-  return pages[pageNum];
-}
+export const getPageItems = (pageNum) => pages[pageNum];
 
 
-export function getPageLength(pageNum) {
-  return pages[pageNum] === undefined ? 0 : pages[pageNum].length;
-}
+export const getPageLength = (pageNum) => pages[pageNum] === undefined ? 0 : pages[pageNum].length;

@@ -3,6 +3,18 @@ const documentFragment = document.createDocumentFragment();
 const sectionFilters = document.body.querySelector('.img-filters');
 
 
+const createPhotoItem = (photo) => {
+  const photoItem = pictureTemplate.cloneNode(true);
+  photoItem.dataset.id = photo.id;
+  photoItem.querySelector('img').src = photo.url;
+  photoItem.querySelector('img').alt = photo.description;
+  photoItem.querySelector('.picture__likes').textContent = photo.likes;
+  photoItem.querySelector('.picture__comments').textContent = photo.comments.length;
+
+  return photoItem;
+};
+
+
 export const showThumbnail = (photos) => {
   document.querySelectorAll('.picture').forEach((item) => item.remove());
 
@@ -17,18 +29,5 @@ export const showThumbnail = (photos) => {
     // Nothing to render
     sectionFilters.classList.add('img-filters--inactive');
   }
-
   document.querySelector('.pictures').appendChild(documentFragment);
 };
-
-
-function createPhotoItem(photo) {
-  const photoItem = pictureTemplate.cloneNode(true);
-  photoItem.dataset.id = photo.id;
-  photoItem.querySelector('img').src = photo.url;
-  photoItem.querySelector('img').alt = photo.description;
-  photoItem.querySelector('.picture__likes').textContent = photo.likes;
-  photoItem.querySelector('.picture__comments').textContent = photo.comments.length;
-
-  return photoItem;
-}

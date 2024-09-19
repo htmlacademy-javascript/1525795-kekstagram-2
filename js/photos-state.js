@@ -5,22 +5,18 @@ const RANDOM_COUNT = 10;
 let loadedPhotos = {};
 
 
-export function saveLoadedPhotos(photos) {
+export const saveLoadedPhotos = (photos) => {
   loadedPhotos = photos;
-}
+};
 
 
-export function getLoadedPhotos() {
-  return loadedPhotos;
-}
+export const getLoadedPhotos = () => loadedPhotos;
 
 
-export function getDefaultPhotos() {
-  return loadedPhotos;
-}
+export const getDefaultPhotos = () => loadedPhotos;
 
 
-export function getRandomPhotos(countPhotos = RANDOM_COUNT) {
+export const getRandomPhotos = (countPhotos = RANDOM_COUNT) => {
   const randomPhotos = [];
   const copyPhotos = loadedPhotos.slice();
 
@@ -29,13 +25,10 @@ export function getRandomPhotos(countPhotos = RANDOM_COUNT) {
   }
 
   return randomPhotos;
-}
+};
 
 
 const sortByComments = (a, b) => b.comments.length - a.comments.length;
 
-export function getDiscussedPhotos() {
-  const sortedPhotos = loadedPhotos.slice().sort(sortByComments);
 
-  return sortedPhotos;
-}
+export const getDiscussedPhotos = () => loadedPhotos.slice().sort(sortByComments);
